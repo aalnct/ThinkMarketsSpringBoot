@@ -21,8 +21,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/save", consumes = "application/json")
-    @PostMapping
+    @PostMapping(value = "/save", consumes = "application/json")
     public ResponseEntity<String> savePersonRecords (@RequestBody Records records) {
         loggerFactory.info("Saving Person Records");
         try {
@@ -36,30 +35,26 @@ public class PersonController {
     }
 
 
-    @GetMapping
-    @RequestMapping(value = "/findPersonById/{id}"  ,produces = "application/json")
+    @GetMapping(value = "/findPersonById/{id}"  ,produces = "application/json")
     public PersonDTO findPersonById (@PathVariable("id") int id) {
         PersonDTO personDTO = personService.findPersonById(id);
         return personDTO;
     }
 
 
-    @GetMapping
-    @RequestMapping(value = "/findPersonByName/{name}")
+    @GetMapping(value = "/findPersonByName/{name}")
     public List<PersonDTO> findPersonByName(@PathVariable("name") String name) {
         List<PersonDTO> personDTOList = personService.findPersonByName(name);
         return personDTOList;
     }
 
-    @GetMapping
-    @RequestMapping(value = "/findPersonByAddress/{address}")
+    @GetMapping(value = "/findPersonByAddress/{address}")
     public List<PersonDTO> findPersonByAddress(@PathVariable("address") String address) {
         List<PersonDTO> personDTOList = personService.findPersonByAddress(address);
         return personDTOList;
     }
 
-    @GetMapping
-    @RequestMapping(value = "/findPersonByPhone/{phoneNumber}")
+    @GetMapping(value = "/findPersonByPhone/{phoneNumber}")
     public List<PersonDTO> findPersonByPhone(@PathVariable("phoneNumber") int phoneNumber) {
         List<PersonDTO> personDTOList = personService.findPersonByPhone(phoneNumber);
         return personDTOList;
