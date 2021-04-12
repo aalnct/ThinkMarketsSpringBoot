@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface PersonService {
     void savePersonDetails(Records records);
-    List<Person> transformDTOTOEntity(Records personList);
     PersonDTO findPersonById(int id);
     List<PersonDTO> findPersonByName(String name);
     List<PersonDTO> findPersonByAddress(String address);

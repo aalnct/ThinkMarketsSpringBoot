@@ -7,7 +7,9 @@ import com.thinkmarkets.ThinkMarketsSpringBoot.entity.Person;
 import com.thinkmarkets.ThinkMarketsSpringBoot.service.PersonService;
 import com.thinkmarkets.ThinkMarketsSpringBoot.util.TransformPerson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class PersonImpl implements PersonService {
     private PersonRepository personRepository;
 
     @Override
+    @Transactional
     public void savePersonDetails(Records personEntityList) {
         List<Person> personEntity = transformDTOTOEntity(personEntityList);
         try {
@@ -26,11 +29,9 @@ public class PersonImpl implements PersonService {
         }catch (Exception exception) {
             exception.printStackTrace();
         }
-
     }
 
-    @Override
-    public List<Person> transformDTOTOEntity(Records personList) {
+    private List<Person> transformDTOTOEntity(Records personList) {
         List<Person> personEntityList = null;
         try {
             personEntityList = TransformPerson.transformPerson(personList);
@@ -41,6 +42,8 @@ public class PersonImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "findPersonById")
     public PersonDTO findPersonById(int id) {
         PersonDTO personDTO = new PersonDTO();
         try {
@@ -58,6 +61,8 @@ public class PersonImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "findPersonByName")
     public List<PersonDTO> findPersonByName(String name) {
         List<Person> personList = personRepository.findPersonByName(name);
         List<PersonDTO> personDTOList = new ArrayList<>();
@@ -76,6 +81,8 @@ public class PersonImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "findPersonByAddress")
     public List<PersonDTO> findPersonByAddress(String address) {
         List<Person> personList = personRepository.findPersonByAddress(address);
         List<PersonDTO> personDTOList = new ArrayList<>();
@@ -94,6 +101,8 @@ public class PersonImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "findPersonByPhone")
     public List<PersonDTO> findPersonByPhone(int phoneNumber) {
         List<Person> personList = personRepository.findPersonByPhone(phoneNumber);
         List<PersonDTO> personDTOList = new ArrayList<>();
