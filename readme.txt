@@ -101,3 +101,12 @@ Output :
         "phone": 9878765
     }
 ]
+
+IPL Dashboard (Work in progress)
+
+1. Spring batch project
+   Read the data from the CSV file
+   Use Spring batch reader, listener and writer to read the data and persists in MySQL DB
+
+2. APIs 
+   ** work in progress**
